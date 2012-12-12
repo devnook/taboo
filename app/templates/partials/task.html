@@ -1,0 +1,17 @@
+<div ng-class="{'alert': message}">{* message *}</div>
+
+<h1>Task</h1>
+
+<p>Description:</p>
+<p><strong>{* task.description *}</strong></p>
+<p>(from: {* task.owner *})</p>
+<h4>Your guess: {* guessedWord *}</h4>
+Guess: <input type="text" ng-model="guessedWord">
+<button class="btn" ng-click="guess()">guess</button>
+
+<div>
+DEBUG: <br />
+{* task *}
+
+</div>
+

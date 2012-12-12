@@ -1,0 +1,15 @@
+<div ng-class="{'alert': message}">{* message *}</div>
+
+
+<h1>Add word</h1>
+<label for="word">Word for guessing</label>
+<input type="text"
+       placeholder="Word ..."
+       ng-model="word"><br>
+<label for="forbidden-words">Forbidden words</label>
+<textarea ng-model="forbidden_words" placeholder="Forbidden words...">
+</textarea><br/>
+<button class="btn"
+        ng-click="add()">Add</button>
+
+

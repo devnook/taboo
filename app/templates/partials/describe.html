@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content%}
+    <a href="{{login_url}}">Sign in or register</a>
+
+
+    <div ng-view></div>
+
+    <div class="container" style="margin-top:50px">
+      <div ng-controller="TabooController"
+        ng-init="">
+        <h1>Angular</h1>
+        <div>{* message *}</div>
+        <button class="btn"
+                ng-repeat="word in availableWords"
+                ng-click="selectWord(word, $event)"
+                ng-class="{'btn-warning' : isSelectedWord(word)}">
+          {* word.word *}
+        </button>
+        <div>
+          <p>You selected: {* currentWord.word *}</p>
+          <p>Forbidden words:
+            <span ng-repeat="forbidden_word in currentWord.forbidden_words"
+                  >{* forbidden_word *} </span>
+          </p>
+        </div>
+
+        <div ng-class="{'hidden' : !isCurrentWordSet()}">
+          <div>Counter: <span>{* counter *}</span></div>
+
+          <textarea placeholder="Write description..."
+                    ng-class="{'error': currentDescriptionError}"
+                    ng-model="currentDescription"
+                    ng-change="validateForbidden()"></textarea><br>
+          <span ng-class="{'alert alert-error': currentDescriptionError}">{* currentDescriptionError *}</span>
+          <br>
+          <button class="btn"
+                  ng-click="publish()"
+                  ng-disabled="currentDescriptionError || !currentDescription">
+            publish
+          </button>
+        </div>
+      </div>
+
+
+
+      <h1>Add word</h1>
+      <form action="/add_word" method="post">
+        <label for="word">Word for guessing</label>
+        <input type="text" name="word" id="word" placeholder="Word ..."><br>
+        <label for="forbidden-words">Forbidden words</label>
+        <textarea name="forbidden_words" placeholder="Forbidden words...">
+        </textarea><br/>
+        <input type="submit" value="add">
+
+      </form>
+      {{words}}
+      <h1>Start session</h1>
+      <form acrion="/start_session" method="get">
+      <label for="session_word">Pick a word</label>
+      <select name="session_word" id="session-word" ng-model="currentForbiddenWordsList">
+        {% for word in words %}
+          <option value="{'a': 'b'}"
+                  data-forbidden_words="{% for forbidden_word in word.forbidden_words %}{{forbidden_word}},{% endfor%}">
+            {{word.word}}
+          </option>
+        {% endfor %}
+      </select>
+      Forbidden:<span>{* currentForbiddenWordsList.a *}</span></br>
+      <textarea placeholder="Add your description here..."></textarea><br>
+      <input type="submit">
+      </form>
+    </div>
+    {% endblock %}
+

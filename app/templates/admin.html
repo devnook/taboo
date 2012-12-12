@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content%}
+        
+    <div class="container" style="margin-top:50px">
+        <a href="{{login_url}}">Sign in or register</a>
+
+        <div class="hero-unit">
+            <h1>Admin</h1>
+            <h2>Add post</h2>
+            <form action="/admin" method="POST">
+                <label for="title">Title</label>
+                <input type="text" placeholder="title" name="title">
+                <label for="content">Content</label>
+                <textarea name="content" placeholder="content"></textarea><br/>
+                <input type="submit">
+
+            </form>
+            <h2>Add tag</h2>
+            <p>{% for tag in tags %}{{tag.name}},{%endfor%}</p>
+            <form action="/admin/add_tag" method="POST">
+                <label for="tag">Tag</label>
+                <input type="text" placeholder="tag" name="tag">
+                <input type="submit">
+
+            </form>
+            <h2>Add tag to post</h2>
+            <p>{% for tag in tags %}{{tag.name}},{%endfor%}</p>
+            <form action="/admin/add_posttag" method="POST">
+                Post
+                <select name="post">
+                   {% for post in posts %}
+                      <option value="{{post.key()}}">{{post.title}}</option>
+                   {% endfor %}
+                </select><br>
+                Tag
+                <select name="tag">
+                   {% for tag in tags %}
+                      <option value="{{tag.key()}}">{{tag.name}}</option>
+                   {% endfor %}
+                </select>
+                <input type="submit">
+
+
+
+
+            </form>
+            {{post_tags}}
+
+                {% for tag in post_tags %}
+                      {{tag.post.title}}
+                      {{tag.post}}
+                      {{tag.tag}}
+                   {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

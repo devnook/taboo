@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content%}
+<div ng-controller="TabooController">
+    <a href="{{login_url}}">Sign in or register</a>
+<h1>Task</h1>
+{* message *}
+Description:
+<p>{{task.description}}</p>
+<p>(from: {{task.owner}})</p>
+<h2>Guess</h2>
+<input type="hidden"
+       ng-model="currentTaskKey"
+       ng-init="currentTaskKey='{{task.key()}}'"
+       value="{{task.key()}}"></br>
+<input type="text" ng-model="guessedWord"></br>
+Your guess: {* guessedWord *}<br>
+<button class="btn" ng-click="guess()">guess</button>
+
+{{task.word}} :: {{task.description}} :: {{task.owner}}
+</div>
+{% endblock %}
+
